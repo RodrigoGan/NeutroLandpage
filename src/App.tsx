@@ -17,8 +17,6 @@ const queryClient = new QueryClient();
 const App: React.FC = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
       <Router>
         <Layout>
           <Routes>
@@ -41,6 +39,8 @@ const App: React.FC = () => (
         </Layout>
       </Router>
     </TooltipProvider>
+    <Toaster />
+    <Sonner />
   </QueryClientProvider>
 );
 

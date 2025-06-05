@@ -1,12 +1,24 @@
-
 import React from 'react';
-import Layout from '@/components/Layout';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 import RecyclingCalculator from '@/components/calculator/RecyclingCalculator';
 
 const Calculator = () => {
+  const navigate = useNavigate();
+
   return (
-    <Layout>
+    <div className="min-h-screen bg-white">
       <div className="container py-12 px-4 md:px-6">
+        <Button
+          variant="ghost"
+          className="mb-8 flex items-center gap-2 hover:bg-neutral-100"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Voltar
+        </Button>
+
         <div className="text-center max-w-2xl mx-auto mb-12">
           <h1 className="text-3xl font-bold mb-4">Calculadora de Impacto Ambiental</h1>
           <p className="text-lg text-neutral-600">
@@ -32,7 +44,7 @@ const Calculator = () => {
           </ul>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

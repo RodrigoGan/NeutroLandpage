@@ -7,14 +7,14 @@ const userTypes = [
     title: 'Usuário Comum',
     description: 'Solicite coletas, calcule seu impacto e obtenha benefícios.',
     color: 'bg-blue-500',
-    image: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&h=300&fit=crop&crop=center'
+    image: '/Image/usuariocomum.jpg'
   },
   {
     icon: <UserSearch className="h-6 w-6 sm:h-8 sm:w-8 text-white" />,
     title: 'Coletor Individual',
     description: 'Receba agendamentos, registre coletas e aumente sua renda.',
     color: 'bg-neutro',
-    image: 'https://images.unsplash.com/photo-1493962853295-0fd70327578a?w=400&h=300&fit=crop&crop=center'
+    image: '/Image/Coletorindividual.jpg'
   },
   {
     icon: <Users className="h-6 w-6 sm:h-8 sm:w-8 text-white" />,

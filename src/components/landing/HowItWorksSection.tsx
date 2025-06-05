@@ -6,21 +6,21 @@ const steps = [
     number: "01",
     title: "Facilitamos a Reciclagem",
     description: "Conectamos você com coletores qualificados em sua região através do nosso aplicativo intuitivo.",
-    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=800&h=600&fit=crop&crop=center",
+    image: "/Image/Facilitamosreciclagem.jpg",
     alt: "Mulher feliz usando smartphone para chamar coletor através do app Neutro"
   },
   {
     number: "02", 
     title: "Geramos Impacto Real",
     description: "Cada coleta contribui para um ecossistema sustentável que transforma vidas e protege o meio ambiente.",
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&h=600&fit=crop&crop=center",
-    alt: "Agricultura comunitária sustentável com pessoas cultivando plantas"
+    image: "/Image/impactoreal.jpg",
+    alt: "Impacto real gerado pelo Neutro"
   },
   {
     number: "03",
     title: "Fortalecemos Comunidades", 
     description: "Criamos oportunidades de renda para coletores e cooperativas, fortalecendo toda a cadeia de reciclagem.",
-    image: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&h=600&fit=crop&crop=center",
+    image: "/Image/Comunidade.jpg",
     alt: "Comunidade trabalhando junta em atividades sustentáveis"
   }
 ];

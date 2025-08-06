@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
-import { Instagram, Facebook, Twitter, Linkedin, MessageSquareHeart, Award, Eye, Info, FileText, ChevronDown, ChevronUp } from 'lucide-react';
+import { Instagram, Facebook, Twitter, Linkedin, MessageSquareHeart, Award, Eye, Info, FileText, ChevronDown, ChevronUp, Mail } from 'lucide-react';
 
 const AppFooter: React.FC = () => {
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
@@ -33,12 +33,14 @@ const AppFooter: React.FC = () => {
       <div className="container px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-1">
-            <Logo className="mb-4" />
+            <Link to="/">
+              <Logo className="mb-4" />
+            </Link>
             <p className="text-neutral-600 mb-4">
               Pequenos Gestos, Grandes Impactos
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-neutro hover:text-neutro-dark transition-colors">
+              <a href="https://instagram.com/neutroimpactoverde" target="_blank" rel="noopener noreferrer" className="text-neutro hover:text-neutro-dark transition-colors">
                 <Instagram size={20} />
               </a>
               <a href="#" className="text-neutro hover:text-neutro-dark transition-colors">
@@ -65,36 +67,25 @@ const AppFooter: React.FC = () => {
             <ul className={`space-y-2 ${expandedSections['institucional'] ? 'block' : 'hidden'} md:block`}>
               <li className="flex items-center">
                 <Info className="h-4 w-4 mr-2 text-neutro" />
-                <div className="relative">
-                  <a 
-                    href="#" 
-                    onClick={(e) => handleComingSoonClick(e, 'quemSomos')}
-                    className="text-neutral-600 hover:text-neutro transition-colors"
-                  >
-                    Quem Somos
-                  </a>
-                  {showComingSoon['quemSomos'] && (
-                    <span className="absolute left-0 top-6 text-xs text-neutro font-medium">
-                      Em breve
-                    </span>
-                  )}
-                </div>
+                <Link to="/quem-somos" className="text-neutral-600 hover:text-neutro transition-colors">
+                  Quem Somos
+                </Link>
               </li>
               <li className="flex items-center">
                 <MessageSquareHeart className="h-4 w-4 mr-2 text-neutro" />
-                <Link to="/institucional#missao" className="text-neutral-600 hover:text-neutro transition-colors">
+                <Link to="/institucional" className="text-neutral-600 hover:text-neutro transition-colors">
                   Missão
                 </Link>
               </li>
               <li className="flex items-center">
                 <Eye className="h-4 w-4 mr-2 text-neutro" />
-                <Link to="/institucional#visao" className="text-neutral-600 hover:text-neutro transition-colors">
+                <Link to="/institucional" className="text-neutral-600 hover:text-neutro transition-colors">
                   Visão
                 </Link>
               </li>
               <li className="flex items-center">
                 <Award className="h-4 w-4 mr-2 text-neutro" />
-                <Link to="/institucional#valores" className="text-neutral-600 hover:text-neutro transition-colors">
+                <Link to="/institucional" className="text-neutral-600 hover:text-neutro transition-colors">
                   Valores
                 </Link>
               </li>
@@ -117,52 +108,19 @@ const AppFooter: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <div className="relative">
-                  <a 
-                    href="#" 
-                    onClick={(e) => handleComingSoonClick(e, 'schedule')}
-                    className="text-neutral-600 hover:text-neutro transition-colors"
-                  >
-                    Agendamento
-                  </a>
-                  {showComingSoon['schedule'] && (
-                    <span className="absolute left-0 top-6 text-xs text-neutro font-medium">
-                      Em breve
-                    </span>
-                  )}
-                </div>
+                <Link to="/agendamento" className="text-neutral-600 hover:text-neutro transition-colors">
+                  Agendamento
+                </Link>
               </li>
               <li>
-                <div className="relative">
-                  <a 
-                    href="#" 
-                    onClick={(e) => handleComingSoonClick(e, 'partners')}
-                    className="text-neutral-600 hover:text-neutro transition-colors"
-                  >
-                    Empresas Parceiras
-                  </a>
-                  {showComingSoon['partners'] && (
-                    <span className="absolute left-0 top-6 text-xs text-neutro font-medium">
-                      Em breve
-                    </span>
-                  )}
-                </div>
+                <Link to="/empresas-parceiras" className="text-neutral-600 hover:text-neutro transition-colors">
+                  Empresas Parceiras
+                </Link>
               </li>
               <li>
-                <div className="relative">
-                  <a 
-                    href="#" 
-                    onClick={(e) => handleComingSoonClick(e, 'faq')}
-                    className="text-neutral-600 hover:text-neutro transition-colors"
-                  >
-                    Perguntas Frequentes
-                  </a>
-                  {showComingSoon['faq'] && (
-                    <span className="absolute left-0 top-6 text-xs text-neutro font-medium">
-                      Em breve
-                    </span>
-                  )}
-                </div>
+                <Link to="/faq" className="text-neutral-600 hover:text-neutro transition-colors">
+                  Perguntas Frequentes
+                </Link>
               </li>
             </ul>
           </div>
@@ -176,47 +134,31 @@ const AppFooter: React.FC = () => {
               {expandedSections['legal'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             <h4 className="font-bold text-lg mb-4 hidden md:block">Legal</h4>
-            <div className="space-y-2">
-              <div 
-                className="flex items-center text-gray-600 hover:text-green-600 cursor-pointer"
-                onClick={(e) => handleComingSoonClick(e, 'termos')}
-              >
+            <div className={`space-y-2 ${expandedSections['legal'] ? 'block' : 'hidden'} md:block`}>
+              <div className="flex items-center text-gray-600 hover:text-green-600 cursor-pointer">
                 <FileText className="w-4 h-4 mr-2" />
-                <span>Termos de Uso</span>
+                <Link to="/termos" className="text-neutral-600 hover:text-neutro transition-colors">
+                  Termos de Uso
+                </Link>
               </div>
-              {showComingSoon['termos'] && (
-                <div className="text-green-600 text-sm ml-6">Em breve</div>
-              )}
-              <div 
-                className="flex items-center text-gray-600 hover:text-green-600 cursor-pointer"
-                onClick={(e) => handleComingSoonClick(e, 'privacidade')}
-              >
+              <div className="flex items-center text-gray-600 hover:text-green-600 cursor-pointer">
                 <FileText className="w-4 h-4 mr-2" />
-                <span>Política de Privacidade</span>
+                <Link to="/privacidade" className="text-neutral-600 hover:text-neutro transition-colors">
+                  Política de Privacidade
+                </Link>
               </div>
-              {showComingSoon['privacidade'] && (
-                <div className="text-green-600 text-sm ml-6">Em breve</div>
-              )}
-              <div 
-                className="flex items-center text-gray-600 hover:text-green-600 cursor-pointer"
-                onClick={(e) => handleComingSoonClick(e, 'cookies')}
-              >
+              <div className="flex items-center text-gray-600 hover:text-green-600 cursor-pointer">
                 <FileText className="w-4 h-4 mr-2" />
-                <span>Política de Cookies</span>
+                <Link to="/cookies" className="text-neutral-600 hover:text-neutro transition-colors">
+                  Política de Cookies
+                </Link>
               </div>
-              {showComingSoon['cookies'] && (
-                <div className="text-green-600 text-sm ml-6">Em breve</div>
-              )}
-              <div 
-                className="flex items-center text-gray-600 hover:text-green-600 cursor-pointer"
-                onClick={(e) => handleComingSoonClick(e, 'contato')}
-              >
-                <MessageSquareHeart className="w-4 h-4 mr-2" />
-                <span>Contato</span>
+              <div className="flex items-center text-gray-600 hover:text-green-600 cursor-pointer">
+                <Mail className="w-4 h-4 mr-2" />
+                <Link to="/contato" className="text-neutral-600 hover:text-neutro transition-colors">
+                  Contato
+                </Link>
               </div>
-              {showComingSoon['contato'] && (
-                <div className="text-green-600 text-sm ml-6">Em breve</div>
-              )}
             </div>
           </div>
         </div>

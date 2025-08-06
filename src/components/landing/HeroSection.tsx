@@ -1,10 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowDown, Play } from 'lucide-react';
+import { ArrowDown, Play, MessageCircle } from 'lucide-react';
 import Logo from '@/components/Logo';
+import LeadCaptureForm from './LeadCaptureForm';
 
 const HeroSection: React.FC = () => {
+  const scrollToForm = () => {
+    const formElement = document.querySelector('.lead-capture-form');
+    if (formElement) {
+      formElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
+
+  const scrollToHowItWorks = () => {
+    const howItWorksElement = document.querySelector('#como-funciona');
+    if (howItWorksElement) {
+      howItWorksElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <section className="relative min-h-[100dvh] flex items-center bg-gradient-to-br from-neutro/10 via-white to-neutral-50 overflow-hidden">
       {/* Background Image with Parallax */}
@@ -43,21 +64,23 @@ const HeroSection: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-[slide-in-left_1.4s_ease-out_0.6s_both] opacity-0">
-              <Button size="lg" className="w-full sm:w-auto px-8 py-4 text-lg font-semibold transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <Play className="mr-2 h-5 w-5" />
-                Baixar Aplicativo
+              <Button 
+                size="lg" 
+                className="w-full sm:w-auto px-8 py-4 text-lg font-semibold transform transition-all duration-300 hover:scale-105 hover:shadow-lg bg-gradient-to-r from-neutro to-neutro-dark"
+                onClick={scrollToForm}
+              >
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Quero Ser Notificado
               </Button>
-              <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 py-4 text-lg group transform transition-all duration-300 hover:scale-105">
-                <a href="#como-funciona" className="flex items-center justify-center">
-                  Saiba Mais
-                  <ArrowDown className="ml-2 h-5 w-5 group-hover:animate-bounce transition-transform duration-300" />
-                </a>
+              <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 py-4 text-lg group transform transition-all duration-300 hover:scale-105" onClick={scrollToHowItWorks}>
+                Saiba Mais
+                <ArrowDown className="ml-2 h-5 w-5 group-hover:animate-bounce transition-transform duration-300" />
               </Button>
             </div>
 
             <div className="grid grid-cols-3 gap-4 sm:gap-8 pt-8 animate-[slide-in-left_1.6s_ease-out_0.8s_both] opacity-0">
               {[
-                { number: "1000+", label: "Coletores ativos" },
+                { number: "500+", label: "Interessados" },
                 { number: "50+", label: "Empresas parceiras" },
                 { number: "10k+", label: "Kg reciclados" }
               ].map((stat, index) => (
@@ -69,17 +92,12 @@ const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Image with Advanced Animation */}
+          {/* Lead Capture Form with Animation */}
           <div className="relative lg:h-[600px] flex items-center justify-center animate-[slide-in-right_1s_ease-out_0.3s_both] opacity-0 mt-8 lg:mt-0">
             <div className="relative w-full max-w-lg group">
               <div className="absolute inset-0 bg-gradient-to-r from-neutro/20 to-neutro-dark/20 rounded-3xl blur-3xl animate-pulse"></div>
-              <div className="relative overflow-hidden rounded-2xl shadow-2xl transform transition-all duration-700 group-hover:scale-105 group-hover:rotate-1">
-                <img 
-                  src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&h=600&fit=crop&crop=center" 
-                  alt="Planeta sustentável e bonito"
-                  className="relative z-10 w-full h-auto transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-neutro/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative transform transition-all duration-700 group-hover:scale-105 lead-capture-form">
+                <LeadCaptureForm />
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Apple, Download, Star } from 'lucide-react';
+import { Apple, Download, Star, Crown, Bell, ArrowUp } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 const GooglePlayIcon = () => (
@@ -30,6 +30,16 @@ const DownloadSection: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  const scrollToForm = () => {
+    const formElement = document.querySelector('.lead-capture-form');
+    if (formElement) {
+      formElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
+
   return (
     <section ref={sectionRef} className="relative py-16 sm:py-24 md:py-32 bg-gradient-to-br from-neutro via-neutro-dark to-green-700 overflow-hidden">
       {/* Animated Background Pattern */}
@@ -51,8 +61,8 @@ const DownloadSection: React.FC = () => {
                 Pronto para fazer a <span className="text-yellow-300 animate-[glow_2s_ease-in-out_infinite_alternate]">diferença?</span>
               </h2>
               <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
-                Junte-se a milhares de pessoas que já estão transformando o mundo através 
-                de pequenos gestos. Baixe o Neutro e comece hoje mesmo!
+                Junte-se à lista VIP e seja um dos primeiros a ter acesso ao app Neutro quando lançarmos. 
+                Garanta benefícios exclusivos e novidades em primeira mão!
               </p>
             </div>
 
@@ -62,35 +72,28 @@ const DownloadSection: React.FC = () => {
                   <Star key={i} className={`h-4 w-4 sm:h-5 sm:w-5 fill-yellow-400 text-yellow-400 animate-[star-twinkle_2s_ease-in-out_infinite_${i * 0.2}s]`} />
                 ))}
               </div>
-              <span className="text-sm sm:text-base text-white/90">4.8 na App Store</span>
+              <span className="text-sm sm:text-base text-white/90">500+ interessados já cadastrados</span>
             </div>
 
-            <div className={`flex flex-col sm:flex-row gap-4 animate-[slide-in-up_1s_ease-out_0.7s_both] opacity-0`}>
-              <Button className="w-full sm:w-auto bg-white text-neutro-dark hover:bg-gray-100 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold flex items-center justify-center gap-3 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <GooglePlayIcon />
-                <div className="text-left">
-                  <div className="text-xs uppercase tracking-wide">Disponível no</div>
-                  <div className="font-bold">Google Play</div>
-                </div>
-              </Button>
-              
-              <Button className="w-full sm:w-auto bg-white text-neutro-dark hover:bg-gray-100 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold flex items-center justify-center gap-3 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <Apple className="h-5 w-5 sm:h-6 sm:w-6" />
-                <div className="text-left">
-                  <div className="text-xs uppercase tracking-wide">Baixe na</div>
-                  <div className="font-bold">App Store</div>
-                </div>
+            <div className={`animate-[slide-in-up_1s_ease-out_0.7s_both] opacity-0`}>
+              <Button 
+                onClick={scrollToForm}
+                className="w-full sm:w-auto bg-white text-neutro-dark hover:bg-gray-100 px-8 sm:px-10 py-4 sm:py-5 text-lg sm:text-xl font-semibold flex items-center justify-center gap-3 transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              >
+                <Crown className="h-6 w-6" />
+                <span>Quero Ser VIP Agora!</span>
+                <ArrowUp className="h-5 w-5" />
               </Button>
             </div>
 
             <div className={`pt-6 sm:pt-8 space-y-3 sm:space-y-4 animate-[fade-in_1s_ease-out_1s_both] opacity-0`}>
               <div className="flex items-center text-sm sm:text-base text-white/90 transform transition-all duration-300 hover:translate-x-2">
-                <Download className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3" />
-                Mais de 10.000 downloads
+                <Crown className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3" />
+                <span>Acesso prioritário ao lançamento</span>
               </div>
               <div className="flex items-center text-sm sm:text-base text-white/90 transform transition-all duration-300 hover:translate-x-2">
                 <Star className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3" />
-                Avaliação 4.8/5 nas lojas
+                <span>Benefícios exclusivos para early adopters</span>
               </div>
             </div>
           </div>
@@ -103,6 +106,10 @@ const DownloadSection: React.FC = () => {
               <div className="text-center text-white space-y-3 sm:space-y-4">
                 <h3 className="text-2xl sm:text-3xl font-bold animate-[glow_3s_ease-in-out_infinite_alternate]">Neutro</h3>
                 <p className="text-white/90 text-base sm:text-lg">Pequenos Gestos, Grandes Impactos</p>
+                <div className="flex items-center justify-center space-x-2 text-sm text-white/70">
+                  <Crown className="h-4 w-4" />
+                  <span>Lista VIP - Lançamento em breve</span>
+                </div>
               </div>
             </div>
             

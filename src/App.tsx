@@ -9,39 +9,46 @@ import Calculator from "./pages/Calculator";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import CollectorRegister from "./pages/register/CollectorRegister";
-import Layout from './components/Layout';
-import InstitutionalPage from './components/institutional/InstitutionalPage';
+import Layout from './components/Layout'
+import InstitutionalPage from './components/institutional/InstitutionalPage'
+import TermsOfUse from './pages/TermsOfUse'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import CookiePolicy from './pages/CookiePolicy'
+import Contact from './pages/Contact'
+import FAQ from './pages/FAQ'
+import Agendamento from './pages/Agendamento'
+import EmpresasParceiras from './pages/EmpresasParceiras';
+import QuemSomos from './pages/QuemSomos';
 
 const queryClient = new QueryClient();
 
-const App: React.FC = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Router>
-        <Layout>
+const App: React.FC = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Router>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/institucional" element={<InstitutionalPage />} />
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/register" element={<Register />} />
             <Route path="/register/collector" element={<CollectorRegister />} />
-            <Route path="/sobre" element={<NotFound />} />
-            <Route path="/missao" element={<NotFound />} />
-            <Route path="/visao" element={<NotFound />} />
-            <Route path="/valores" element={<NotFound />} />
-            <Route path="/termos" element={<NotFound />} />
-            <Route path="/privacidade" element={<NotFound />} />
-            <Route path="/cookies" element={<NotFound />} />
-            <Route path="/contato" element={<NotFound />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/institucional" element={<InstitutionalPage />} />
+            <Route path="/termos" element={<TermsOfUse />} />
+            <Route path="/privacidade" element={<PrivacyPolicy />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
+            <Route path="/contato" element={<Contact />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/agendamento" element={<Agendamento />} />
+            <Route path="/empresas-parceiras" element={<EmpresasParceiras />} />
+            <Route path="/quem-somos" element={<QuemSomos />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Layout>
-      </Router>
-    </TooltipProvider>
-    <Toaster />
-    <Sonner />
-  </QueryClientProvider>
-);
+        </Router>
+        <Toaster />
+        <Sonner />
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

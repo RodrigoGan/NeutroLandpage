@@ -95,6 +95,10 @@ const DownloadSection: React.FC = () => {
                 <Star className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3" />
                 <span>Benefícios exclusivos para early adopters</span>
               </div>
+              <div className="flex items-center text-sm sm:text-base text-white/90 transform transition-all duration-300 hover:translate-x-2">
+                <Bell className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3" />
+                <span>Novidades em primeira mão</span>
+              </div>
             </div>
           </div>
 

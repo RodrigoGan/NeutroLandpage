@@ -81,8 +81,8 @@ const HeroSection: React.FC = () => {
             <div className="grid grid-cols-3 gap-4 sm:gap-8 pt-8 animate-[slide-in-left_1.6s_ease-out_0.8s_both] opacity-0">
               {[
                 { number: "500+", label: "Interessados" },
-                { number: "50+", label: "Empresas parceiras" },
-                { number: "10k+", label: "Kg reciclados" }
+                { number: "5", label: "Tipos de usuários" },
+                { number: "3", label: "Categorias de parceiros" }
               ].map((stat, index) => (
                 <div key={index} className="text-center transform transition-all duration-300 hover:scale-110">
                   <div className="text-2xl sm:text-3xl font-bold text-neutro-dark animate-[count-up_2s_ease-out_1s_both]">{stat.number}</div>

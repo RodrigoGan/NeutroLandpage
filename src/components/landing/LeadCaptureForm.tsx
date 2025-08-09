@@ -4,7 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Crown, Gift, Bell, CheckCircle, Sparkles, AlertCircle } from 'lucide-react';
+import { Crown, Gift, Bell, CheckCircle, Sparkles, AlertCircle, Database } from 'lucide-react';
+import { insertLandingLead } from '@/lib/supabase';
 
 const userTypes = [
   {
@@ -60,6 +61,12 @@ const LeadCaptureForm: React.FC = () => {
 
     if (!formData.whatsapp.trim()) {
       newErrors.whatsapp = 'WhatsApp é obrigatório';
+    } else {
+      // Remove formatação para validar apenas números
+      const numbers = formData.whatsapp.replace(/\D/g, '');
+      if (numbers.length < 10 || numbers.length > 11) {
+        newErrors.whatsapp = 'WhatsApp deve ter 10 ou 11 dígitos';
+      }
     }
 
     if (!formData.userType) {
@@ -70,10 +77,37 @@ const LeadCaptureForm: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Função para formatar telefone brasileiro
+  const formatPhoneNumber = (value: string) => {
+    // Remove tudo que não é número
+    const numbers = value.replace(/\D/g, '');
+    
+    // Limita a 11 dígitos (DDD + 9 dígitos)
+    const limited = numbers.substring(0, 11);
+    
+    // Aplica a máscara
+    if (limited.length <= 2) {
+      return limited;
+    } else if (limited.length <= 7) {
+      return `(${limited.substring(0, 2)}) ${limited.substring(2)}`;
+    } else if (limited.length <= 11) {
+      return `(${limited.substring(0, 2)}) ${limited.substring(2, 7)}-${limited.substring(7)}`;
+    }
+    
+    return limited;
+  };
+
   const handleInputChange = (field: string, value: string) => {
+    let processedValue = value;
+    
+    // Aplica máscara no campo WhatsApp
+    if (field === 'whatsapp') {
+      processedValue = formatPhoneNumber(value);
+    }
+    
     setFormData(prev => ({
       ...prev,
-      [field]: value
+      [field]: processedValue
     }));
     
     // Clear error when user starts typing
@@ -85,24 +119,24 @@ const LeadCaptureForm: React.FC = () => {
     }
   };
 
-  const sendEmail = async (data: typeof formData) => {
-    const subject = encodeURIComponent('Novo Lead VIP - Neutro App');
-    const body = encodeURIComponent(`
-Novo cadastro na lista VIP do Neutro App:
+  const saveLead = async (data: typeof formData) => {
+    try {
+      const result = await insertLandingLead({
+        name: data.name,
+        email: data.email,
+        whatsapp: data.whatsapp,
+        user_type: data.userType
+      });
 
-Nome: ${data.name}
-E-mail: ${data.email}
-WhatsApp: ${data.whatsapp}
-Tipo de Usuário: ${userTypes.find(t => t.value === data.userType)?.label}
+      if (!result.success) {
+        throw new Error('Erro ao salvar lead no banco de dados');
+      }
 
-Data do cadastro: ${new Date().toLocaleString('pt-BR')}
-
----
-Enviado automaticamente pelo formulário da landing page.
-    `);
-
-    const mailtoUrl = `mailto:neutro@neutro.app.br?subject=${subject}&body=${body}`;
-    window.open(mailtoUrl);
+      return result;
+    } catch (error) {
+      console.error('Erro ao salvar lead:', error);
+      throw error;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -115,26 +149,14 @@ Enviado automaticamente pelo formulário da landing page.
     setIsSubmitting(true);
     
     try {
-      // Simular envio do formulário
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Enviar e-mail
-      await sendEmail(formData);
+      // Salvar lead no banco de dados
+      await saveLead(formData);
       
       setIsSubmitting(false);
       setIsSubmitted(true);
       
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({
-          name: '',
-          email: '',
-          whatsapp: '',
-          userType: ''
-        });
-        setErrors({});
-      }, 3000);
+      // Não reseta mais o formulário automaticamente
+      // O usuário precisará recarregar a página para usar novamente
     } catch (error) {
       setIsSubmitting(false);
       console.error('Erro ao enviar formulário:', error);
@@ -143,22 +165,32 @@ Enviado automaticamente pelo formulário da landing page.
 
   if (isSubmitted) {
     return (
-      <Card className="w-full max-w-md mx-auto bg-gradient-to-br from-green-50 to-neutro/10 border-green-200">
+      <Card className="w-full max-w-md mx-auto bg-gradient-to-br from-green-50 to-neutro/10 border-green-200 animate-[fade-in-up_0.6s_ease-out]">
         <CardContent className="p-6 text-center">
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-green-100 rounded-full">
+            <div className="p-3 bg-green-100 rounded-full animate-[scale-in_0.5s_ease-out_0.1s_both]">
               <CheckCircle className="h-8 w-8 text-green-600" />
             </div>
           </div>
-          <h3 className="text-xl font-bold text-green-800 mb-2">
+          <h3 className="text-xl font-bold text-green-800 mb-2 animate-[slide-in-up_0.6s_ease-out_0.2s_both] opacity-0">
             Parabéns! Você está na lista VIP! 🎉
           </h3>
-          <p className="text-green-700 mb-4">
+          <p className="text-green-700 mb-4 animate-[slide-in-up_0.6s_ease-out_0.3s_both] opacity-0">
             Você será um dos primeiros a ter acesso ao app Neutro com benefícios exclusivos!
           </p>
-          <div className="flex items-center justify-center space-x-2 text-sm text-green-600">
-            <Bell className="h-4 w-4" />
-            <span>Receberemos novidades em primeira mão!</span>
+          <div className="flex flex-col items-center justify-center space-y-2 text-sm text-green-600 animate-[slide-in-up_0.6s_ease-out_0.4s_both] opacity-0">
+            <div className="flex items-center space-x-2">
+              <Database className="h-4 w-4" />
+              <span>Dados salvos com segurança!</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Bell className="h-4 w-4" />
+              <span>Receberá novidades em primeira mão!</span>
+            </div>
+            <div className="flex items-center space-x-2 mt-3 p-2 bg-green-100 rounded-lg">
+              <Crown className="h-4 w-4 text-neutro" />
+              <span className="font-medium">Status VIP Ativado!</span>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -191,6 +223,7 @@ Enviado automaticamente pelo formulário da landing page.
               onChange={(e) => handleInputChange('name', e.target.value)}
               placeholder="Digite seu nome completo"
               className={errors.name ? 'border-red-500' : ''}
+              disabled={isSubmitting}
             />
             {errors.name && (
               <div className="flex items-center space-x-1 text-red-500 text-sm">
@@ -209,6 +242,7 @@ Enviado automaticamente pelo formulário da landing page.
               onChange={(e) => handleInputChange('email', e.target.value)}
               placeholder="seu@email.com"
               className={errors.email ? 'border-red-500' : ''}
+              disabled={isSubmitting}
             />
             {errors.email && (
               <div className="flex items-center space-x-1 text-red-500 text-sm">
@@ -226,6 +260,7 @@ Enviado automaticamente pelo formulário da landing page.
               onChange={(e) => handleInputChange('whatsapp', e.target.value)}
               placeholder="(00) 00000-0000"
               className={errors.whatsapp ? 'border-red-500' : ''}
+              disabled={isSubmitting}
             />
             {errors.whatsapp && (
               <div className="flex items-center space-x-1 text-red-500 text-sm">
@@ -240,6 +275,7 @@ Enviado automaticamente pelo formulário da landing page.
             <Select
               value={formData.userType}
               onValueChange={(value) => handleInputChange('userType', value)}
+              disabled={isSubmitting}
             >
               <SelectTrigger className={errors.userType ? 'border-red-500' : ''}>
                 <SelectValue placeholder="Selecione seu perfil" />
@@ -275,7 +311,7 @@ Enviado automaticamente pelo formulário da landing page.
               </>
             ) : (
               <>
-                <Sparkles className="mr-2 h-4 w-4" />
+                <Crown className="mr-2 h-4 w-4" />
                 Garantir Meu Lugar VIP
               </>
             )}

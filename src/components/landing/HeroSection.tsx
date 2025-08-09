@@ -11,7 +11,7 @@ const HeroSection: React.FC = () => {
     if (formElement) {
       formElement.scrollIntoView({ 
         behavior: 'smooth',
-        block: 'center'
+        block: 'nearest'
       });
     }
   };
@@ -27,7 +27,7 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center bg-gradient-to-br from-neutro/10 via-white to-neutral-50 overflow-hidden">
+    <section className="relative min-h-[100dvh] flex items-center bg-gradient-to-br from-neutro/10 via-white to-neutral-50">
       {/* Background Image with Parallax */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 animate-[float_6s_ease-in-out_infinite]">
@@ -40,7 +40,7 @@ const HeroSection: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-white/50"></div>
       </div>
 
-      <div className="container relative z-10 px-4 md:px-6 max-w-7xl mx-auto">
+      <div className="container relative z-10 px-4 sm:px-6 md:px-8 lg:px-12 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[100dvh] py-12 md:py-20">
           {/* Text Content with Staggered Animation */}
           <div className="space-y-6 md:space-y-8 text-center lg:text-left">

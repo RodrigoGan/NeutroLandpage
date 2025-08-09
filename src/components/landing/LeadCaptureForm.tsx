@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Crown, Gift, Bell, CheckCircle, Sparkles, AlertCircle, Database } from 'lucide-react';
+import { Crown, Gift, Bell, CheckCircle, Sparkles, AlertCircle, Database, Share } from 'lucide-react';
 import { insertLandingLead } from '@/lib/supabase';
 
 const userTypes = [
@@ -45,6 +45,24 @@ const LeadCaptureForm: React.FC = () => {
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Função para compartilhar no WhatsApp
+  const shareOnWhatsApp = () => {
+    const currentUrl = window.location.origin;
+    const message = `🎉 Opa! Acabei de garantir meu lugar VIP no NEUTRO! 
+
+🌱 É o novo app que vai revolucionar a reciclagem no Brasil! Conecta coletores, cooperativas e empresas numa rede sustentável incrível.
+
+👑 Como usuário VIP, vou ter acesso antecipado + benefícios exclusivos!
+
+Quer entrar na lista VIP também? 
+👉 ${currentUrl}
+
+Vamos juntos transformar pequenos gestos em grandes impactos! 🌍♻️`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
@@ -191,6 +209,20 @@ const LeadCaptureForm: React.FC = () => {
               <Crown className="h-4 w-4 text-neutro" />
               <span className="font-medium">Status VIP Ativado!</span>
             </div>
+          </div>
+          
+          {/* Botão de Compartilhamento */}
+          <div className="mt-6 animate-[slide-in-up_0.6s_ease-out_0.5s_both] opacity-0">
+            <Button 
+              onClick={shareOnWhatsApp}
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 hover:scale-105 transform"
+            >
+              <Share className="mr-2 h-5 w-5" />
+              Convide seus amigos! 📲
+            </Button>
+            <p className="text-xs text-green-600 mt-2 opacity-75">
+              Compartilhe e ajude mais pessoas a entrarem na lista VIP!
+            </p>
           </div>
         </CardContent>
       </Card>
